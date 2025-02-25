@@ -81,6 +81,19 @@ const displayMovements = function (movements) {
 }
 displayMovements(account1.movements)
 
+const createUsernames = function (acc) {
+  acc.forEach(function (acc) { 
+    acc.username = acc.owner
+    .toLowerCase()
+    .split(' ')
+    .map(name => name[0])
+    .join('');
+  });
+  
+}
+createUsernames(accounts);
+console.log(accounts);
+
 /*
 Coding Challenge #1
 Julia and Kate are doing a study on dogs. So each of them asked 5 dog owners about their dog's age, and stored the data into an array (one array for each). For now, they are just interested in knowing whether a dog is an adult or a puppy.
@@ -121,25 +134,40 @@ console.log(checkDogs(Julia, Kate));
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 const eurToUsd = 1.1;
 
-const movementsUSD = movements.map(function (mov) {
-  // return mov * eurToUsd;
-  return 23;
-});
+// const movementsUSD = movements.map(function (mov) {
+//   return mov * eurToUsd;
+//   // return 23;
+// });
+const movementsUSD = movements.map(mov => mov * eurToUsd);
+
 console.log(movements);
 console.log(movementsUSD);
 
+const movementsUSDfor = [];
+for (const mov of movements) movementsUSDfor.push(mov * eurToUsd);
+
+const movementsDescriptions = movements.map((mov, i) => {
+  `Movement ${i + 1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)} euros`;
+});
+console.log(movementsDescriptions);
 
 
+// FILTER METHOD
+// Uses a callback function too
 
+const deposits = movements.filter(function (mov) {
+  return mov > 0;
+});
+console.log(movements);
+console.log(deposits);
 
+const depositsFor = [];
+for (const mov of movements) if(mov > 0) depositsFor.push(mov)
+console.log(depositsFor);
 
+const withdrawals = movements.filter(mov => mov < 0);
 
-
-
-
-
-
-
+console.log(withdrawals);
 
 
 
