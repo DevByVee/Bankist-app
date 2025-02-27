@@ -199,8 +199,11 @@ const calcPrintBalance = function (movements) {
 calcPrintBalance(account1.movements);
 
 // Maximum Value
-// 
-
+const max = movements.reduce((acc, mov) => {
+  if (acc > mov) return acc;
+  else return mov;
+}, movements[0]);
+console.log(max);
 
 
 
