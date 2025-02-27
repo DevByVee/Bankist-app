@@ -180,6 +180,10 @@ console.log(movements);
 //   console.log(`Iteration ${i}: ${acc}`);
 //   return acc + cur;
 // }, 0);
+// first parameter is accumulator
+// second: current element of the array
+// third: current index
+// last: array itself
 
 const balance = movements.reduce((acc, cur) => acc + cur, 0);
 console.log(balance);
@@ -190,7 +194,9 @@ console.log(balance2);
 
 const calcPrintBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
-}
+  labelBalance.textContent = `${balance} EUR`
+};
+calcPrintBalance(account1.movements);
 
 
 
