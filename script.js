@@ -172,7 +172,7 @@ console.log(withdrawals);
 
 
 // REDUCE METHOD
-
+// Reduce is for boiling down the array into one single value
 console.log(movements);
 
 // Accumulator
@@ -198,6 +198,8 @@ const calcPrintBalance = function (movements) {
 };
 calcPrintBalance(account1.movements);
 
+// Maximum Value
+// 
 
 
 
