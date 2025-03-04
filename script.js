@@ -73,13 +73,35 @@ const displayMovements = function (movements) {
       <div class="movements__type movements__type--${type}">
       ${i + 1} ${type}
       </div>
-      <div class="movements__value">${mov}</div>
+      <div class="movements__value">${mov}€</div>
     </div>
     `;
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 }
-displayMovements(account1.movements)
+displayMovements(account1.movements);
+
+const calcPrintBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance}€`;
+};
+
+const calcDisplaySummary = function (movements) {
+  const incomes = movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`;
+  const out = movements.filter(mov => mov < 0).reduce((acc, mov) => acc + Math.abs(mov), 0);
+  labelSumOut.textContent = `${out}€`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => deposit * 1.2 / 100)
+    .filter((int, i, arr) => {
+      return int >= 1;
+    })
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest}€`;
+}
+calcDisplaySummary(account1.movements)
 
 const createUsernames = function (acc) {
   acc.forEach(function (acc) { 
@@ -109,7 +131,7 @@ is an adult, and is 5 years old") or a puppy ("Dog number 2 is still a puppy🐶
 Test data:
 § Data 1: Julia's data [3, 5, 2, 12, 7], Kate's data [4, 1, 15, 8, 3]
 § Data 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
-*/
+
 const Julia = [3, 5, 2, 12, 7];
 const Kate = [4, 1, 15, 8, 3];
 const checkDogs = function (dogsJulia, dogsKate) {
@@ -130,10 +152,11 @@ console.log(checkDogs(Julia, Kate));
 
 // MAP METHOD
 // The map method creates a new array with the results of applying the provided function on every element in this array.
-
+*/
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-const eurToUsd = 1.1;
+// const eurToUsd = 1.1;
 
+/*
 // const movementsUSD = movements.map(function (mov) {
 //   return mov * eurToUsd;
 //   // return 23;
@@ -192,10 +215,7 @@ let balance2 = 0;
 for (const mov of movements) balance2 += mov;
 console.log(balance2);
 
-const calcPrintBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance} EUR`
-};
+
 calcPrintBalance(account1.movements);
 
 // Maximum Value
@@ -217,7 +237,7 @@ Create a function 'calcAverageHumanAge', which accepts an arrays of dog's ages (
 Test data:
 § Data 1: [5, 2, 4, 1, 15, 8, 3]
 § Data 2: [16, 6, 10, 5, 6, 1, 4]
-*/
+
 const calcAverageHumanAge = function (ages) {
   const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
   const adultAges = humanAges.filter(age => age >= 18);
@@ -227,11 +247,44 @@ const calcAverageHumanAge = function (ages) {
 };
 console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]))
 console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+*/
+
+// CHAINING
+// Do not overuse chaining
+// you can only chain a method after another if the first returns an array
+// Do not chain methods that mutate the underlying or original array i.e the splice method
+
+
+// PIPELINE
+const eurToUsd = 1.1
+console.log(movements);
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)
+  // .map(mov => mov * eurToUsd)
+  .map((mov, i, arr) => {
+    console.log(arr);
+    return mov * eurToUsd
+  })
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(totalDepositsUSD);
 
 
 
+// Coding Challenge #3
 
+/* 
+Rewrite the 'calcAverageHumanAge' function from the previous challenge, but this time as an arrow function, and using chaining!
 
+TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
+TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
+
+GOOD LUCK 😀
+*/
+
+const calcAverageHumanAge = ages => ages
+  .map(age => age <= 2 ? 2 * age : 16 + age * 4)
+  .filter(age => age >= 18)
+  .reduce((acc, age, i, arr) => acc + age / arr.length, 0)
 
 
 
