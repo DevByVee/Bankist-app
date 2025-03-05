@@ -167,17 +167,48 @@ btnTransfer.addEventListener('click', function (e) {
   };
 });
 
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+ 
+  if (currentAccount.username === inputCloseUsername.value && currentAccount.pin === Number(inputClosePin.value)) {
+
+    const index = accounts.findIndex(acc => acc.username === currentAccount.username);
+
+    // Delete account
+    accounts.splice(index, 1);
+
+    // Hide UI
+    containerApp.style.opacity = 0;
+
+    // Goodbye message
+    labelWelcome.textContent = `Goodbye, ${currentAccount.owner.split(' ')[0]}`;
+  };
+
+  inputCloseUsername.value = inputClosePin.value = '';
+});
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// FINDINDEX METHOD
+// Returns the index of the found element and not the element itself
+// indexof can only search for values that is in the array
+
+// FINDLAST AND FINDLASTINDEX METHOD
+// Does the same thing as gthe others but starts searching from the last to the first elements
+
+const lastWithdrawal = movements.findLast(mov => mov < 0);
+console.log(lastWithdrawal);
+
+const largeMov = movements.findLastIndex(mov => mov > 1000)
+console.log(`Your latest large movement ${movements.length - largeMov} was movements ago`);
 
 
+// SOME AND EVERY METHOD
 
+// SOME METHOD
 
-
-
-
-
-
-
-
+console.log(movements);
+console.log(movements.includes(-130));
 
 
 
@@ -227,7 +258,7 @@ console.log(checkDogs(Julia, Kate));
 // MAP METHOD
 // The map method creates a new array with the results of applying the provided function on every element in this array.
 */
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
 // const eurToUsd = 1.1;
 
 /*
