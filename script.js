@@ -167,6 +167,21 @@ btnTransfer.addEventListener('click', function (e) {
   };
 });
 
+btnLoan.addEventListener('click', function (e) { 
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) { 
+    // Add loan
+    currentAccount.movements.push(amount);
+
+    // Update UI
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = '';
+});
+
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
  
@@ -208,13 +223,25 @@ console.log(`Your latest large movement ${movements.length - largeMov} was movem
 // SOME METHOD
 
 console.log(movements);
+// checks for equality
 console.log(movements.includes(-130));
 
+// condition
+console.log(movements.some(mov => mov === -130));
+// checks if at least one element is true
+const anyDeposits = movements.some(mov => mov > 5000);
+console.log(anyDeposits);
 
 
+// EVERY METHOD
+// checks if all elements are true
+console.log(movements.every(mov => mov > 0));
+console.log(account4.movements.every(mov => mov > 0));
 
-
-
+// Separate callback
+// Reusable (DRY PRINCIPLE)
+const deposit = mov => mov > 0;
+console.log(movements.some(deposit));
 
 
 
