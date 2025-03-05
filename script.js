@@ -79,29 +79,32 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 }
-displayMovements(account1.movements);
 
 const calcPrintBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = `${balance}€`;
 };
 
-const calcDisplaySummary = function (movements) {
-  const incomes = movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
+const calcDisplaySummary = function (acc) {
+  const incomes = acc.movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `${incomes}€`;
-  const out = movements.filter(mov => mov < 0).reduce((acc, mov) => acc + Math.abs(mov), 0);
+
+  const out = acc.movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + Math.abs(mov), 0);
   labelSumOut.textContent = `${out}€`;
 
-  const interest = movements
+  const interest = acc.movements
     .filter(mov => mov > 0)
-    .map(deposit => deposit * 1.2 / 100)
+    .map(deposit => deposit * acc.interestRate / 100)
     .filter((int, i, arr) => {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
   labelSumInterest.textContent = `${interest}€`;
 }
-calcDisplaySummary(account1.movements)
 
 const createUsernames = function (acc) {
   acc.forEach(function (acc) { 
@@ -113,8 +116,69 @@ const createUsernames = function (acc) {
   });
   
 }
-createUsernames(accounts);
-console.log(accounts);
+createUsernames(accounts)
+
+// EVENT HANDLERs
+let currentAccount;
+
+// LOGIN
+btnLogin.addEventListener('click', function (event) {
+  // Prevent form from submitting
+  event.preventDefault();
+  currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
+  console.log(currentAccount);
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display welcome message and UI
+    labelWelcome.textContent = `Welcome, ${currentAccount.owner.split(' ')[0]}`;
+    containerApp.style.opacity = 1;
+
+    // Clear input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+    
+    // Display movements
+    displayMovements(currentAccount.movements)
+
+    // Display balance
+    calcPrintBalance(currentAccount.movements)
+
+    // Display summary
+    calcDisplaySummary(currentAccount)
+
+  }
+  
+});
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(acc => acc.username === inputTransferTo.value);
+  console.log(amount, receiverAcc);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 Coding Challenge #1
@@ -247,7 +311,7 @@ const calcAverageHumanAge = function (ages) {
 };
 console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]))
 console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
-*/
+
 
 // CHAINING
 // Do not overuse chaining
@@ -279,19 +343,35 @@ TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
 TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
 
 GOOD LUCK 😀
-*/
+
 
 const calcAverageHumanAge = ages => ages
   .map(age => age <= 2 ? 2 * age : 16 + age * 4)
   .filter(age => age >= 18)
   .reduce((acc, age, i, arr) => acc + age / arr.length, 0)
+*/
 
+// FIND METHOD
+// Used to retrieve one elements of an array based on a condition
+// Also accepts a callback function
+// Doesn't return a new array ONLY the first element in an array that satisfies a specific condition
 
+const firstWithdrawal = movements.find(mov => mov < 0)
+console.log(movements);
+console.log(firstWithdrawal);
 
+console.log(accounts);
 
+const account = accounts.find(acc => acc.owner === 'Jessica Kent');
+console.log(account);
 
-
-
+for (const acc of accounts) {
+  if (acc.owner === 'Jessica Kent') {
+    console.log(acc);
+    break;
+  }
+  
+}
 
 
 
