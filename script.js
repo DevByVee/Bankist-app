@@ -202,50 +202,155 @@ btnClose.addEventListener('click', function (e) {
   inputCloseUsername.value = inputClosePin.value = '';
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+// LECTURES
+
+
+
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-// FINDINDEX METHOD
-// Returns the index of the found element and not the element itself
-// indexof can only search for values that is in the array
+/////////////////////////////////////////////////
+// Array Methods
+/*
+let arr = ['a', 'b', 'c', 'd', 'e'];
 
-// FINDLAST AND FINDLASTINDEX METHOD
-// Does the same thing as gthe others but starts searching from the last to the first elements
+// SLICE Method
+// We can extract parts of an array without changing the original array
 
-const lastWithdrawal = movements.findLast(mov => mov < 0);
-console.log(lastWithdrawal);
-
-const largeMov = movements.findLastIndex(mov => mov > 1000)
-console.log(`Your latest large movement ${movements.length - largeMov} was movements ago`);
-
-
-// SOME AND EVERY METHOD
-
-// SOME METHOD
-
-console.log(movements);
-// checks for equality
-console.log(movements.includes(-130));
-
-// condition
-console.log(movements.some(mov => mov === -130));
-// checks if at least one element is true
-const anyDeposits = movements.some(mov => mov > 5000);
-console.log(anyDeposits);
+console.log(arr.slice(2)); // brings out the items in the array starting from postion 2
+console.log(arr.slice(2, 4)); // brings out the items in the array starting from position 2 and ending at position 4
+console.log(arr.slice(-2)); // The last two elements of the array
+console.log(arr.slice(-1));
+console.log(arr.slice(1, -2)); // starts extracting from postion one and stop before the last two
+console.log(arr.slice()); // can be used to create shallow copies too
+console.log([...arr]);
 
 
-// EVERY METHOD
-// checks if all elements are true
-console.log(movements.every(mov => mov > 0));
-console.log(account4.movements.every(mov => mov > 0));
+// SPLICE Method
+// We can add or remove items from an array but it changes the original array
 
-// Separate callback
-// Reusable (DRY PRINCIPLE)
-const deposit = mov => mov > 0;
-console.log(movements.some(deposit));
+// console.log(arr.splice(2));
+arr.splice(-1);
+arr.splice(1, 2);
+console.log(arr); // extracted elements are gone. splice deleted the rest elements
+
+// REVERSE
+// It reverses an array
+// Also mutates the arrays too
+arr = ['a', 'b', 'c', 'd', 'e'];
+const arr2 = ['j', 'i', 'h', 'g', 'f']
+console.log(arr2.reverse());
+console.log(arr2);
 
 
 
 
+// CONCAT
+// It combines two arrays
+// It doesn't mutate the original array
+const letters = arr.concat(arr2)
+console.log(letters);
+console.log([...arr, arr2]);
+
+// JOIN
+console.log(letters.join(' - '));
+
+// AT Method
+const arr = [23, 11, 64];
+console.log(arr[0]); // older
+console.log(arr.at(0)); // new
+
+console.log(arr[arr.length - 1]); // getting the last element of an array (before)
+console.log(arr.slice(-1)[0]); // or using slice method
+console.log(arr.at(-1)); // using the at method (newer method)
+
+// AT Method also works on strings
+console.log('Vicky'.at(0)); 
+console.log('Vicky'.at(-1));
+
+
+
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// for (const movement of movements) {
+for(const [i, movement] of movements.entries()) { // getting the current element using index
+  if (movement > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${movement}`);
+  } else {
+    console.log(`You withdrew ${Math.abs(movement)}`); // Maths.abs takes the absolute value
+  }
+}
+
+// LOOPING OVER ARRAYS USING THE FOREACH METHOD
+// loops over an array and executes the callback function and passes in the current element of the array after each iteration
+movements.forEach(function (movement, i, arr) { // first element has to be the element before the index
+  if (movement > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${movement}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(movement)}`); 
+  }
+})
+// 0: function(200)
+// 1: function(450)
+// 2: function(400)
+// etc
+
+// Difference between foreach and forof loop is that
+// You cannot break out of a foreach loop
+// continue and break statements do not work in a for each loop
+*/
+
+
+
+// FOREACH WITH MAPS AND SETS
+
+// Map
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+currencies.forEach(function (value, key, map) {
+  console.log(`${key}: ${value}`);
+})
+
+// Set
+const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+console.log(currenciesUnique);
+
+currenciesUnique.forEach(function (value, _, map) {
+  // console.log(`${key}: ${value}`); // Set doesn't have keys or indexes
+  console.log(`${value}: ${value}`);
+  // When using .forEach() on a Set, the second argument is redundant, and you only need the value.
+})
+
+currenciesUnique.forEach(value => console.log(value));
 
 
 /*
@@ -417,7 +522,7 @@ const calcAverageHumanAge = ages => ages
   .map(age => age <= 2 ? 2 * age : 16 + age * 4)
   .filter(age => age >= 18)
   .reduce((acc, age, i, arr) => acc + age / arr.length, 0)
-*/
+
 
 // FIND METHOD
 // Used to retrieve one elements of an array based on a condition
@@ -441,156 +546,163 @@ for (const acc of accounts) {
   
 }
 
+// FINDINDEX METHOD
+// Returns the index of the found element and not the element itself
+// indexof can only search for values that is in the array
+
+// FINDLAST AND FINDLASTINDEX METHOD
+// Does the same thing as gthe others but starts searching from the last to the first elements
+
+const lastWithdrawal = movements.findLast(mov => mov < 0);
+console.log(lastWithdrawal);
+
+const largeMov = movements.findLastIndex(mov => mov > 1000)
+console.log(`Your latest large movement ${movements.length - largeMov} was movements ago`);
 
 
+// SOME AND EVERY METHOD
+
+// SOME METHOD
+
+console.log(movements);
+// checks for equality
+console.log(movements.includes(-130));
+
+// condition
+console.log(movements.some(mov => mov === -130));
+// checks if at least one element is true
+const anyDeposits = movements.some(mov => mov > 5000);
+console.log(anyDeposits);
 
 
+// EVERY METHOD
+// checks if all elements are true
+console.log(movements.every(mov => mov > 0));
+console.log(account4.movements.every(mov => mov > 0));
+
+// Separate callback
+// Reusable (DRY PRINCIPLE)
+const deposit = mov => mov > 0;
+console.log(movements.some(deposit));
 
 
+// FLAT AND FLATMAP METHOD
+// FLAT METHOD
+// Only goes one level deep when flattening an array
+const arr = [[1, 2, 3], [4, 5, 6], 7,8]
+console.log(arr.flat());
+
+// If you want to go deeper you need to specify the depth
+const arrDeep = [[[1, 2], 3], [4,[ 5, 6]], 7, 8];
+console.log(arrDeep.flat(2));
+
+const overalBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(overalBalance);
+
+// FLATMAP METHOD
+// Combines flat and map method which is better for performance
+// Only goes one level deep when flattening an array and can't be changed
+const overalBalance2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance);
 
 
+// Coding Challenge #4
 
-
-
-
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
-
-
-
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
-/////////////////////////////////////////////////
-// Array Methods
 /*
-let arr = ['a', 'b', 'c', 'd', 'e'];
+This time, Julia and Kate are studying the activity levels of different dog breeds.
 
-// SLICE Method
-// We can extract parts of an array without changing the original array
+YOUR TASKS:
+1. Store the the average weight of a "Husky" in a variable "huskyWeight"
+2. Find the name of the only breed that likes both "running" and "fetch" ("dogBothActivities" variable)
+3. Create an array "allActivities" of all the activities of all the dog breeds
+4. Create an array "uniqueActivities" that contains only the unique activities (no activity repetitions). HINT: Use a technique with a special data structure that we studied a few sections ago.
+5. Many dog breeds like to swim. What other activities do these dogs like? Store all the OTHER activities these breeds like to do, in a unique array called "swimmingAdjacent".
+6. Do all the breeds have an average weight of 10kg or more? Log to the console whether "true" or "false".
+7. Are there any breeds that are "active"? "Active" means that the dog has 3 or more activities. Log to the console whether "true" or "false".
 
-console.log(arr.slice(2)); // brings out the items in the array starting from postion 2
-console.log(arr.slice(2, 4)); // brings out the items in the array starting from position 2 and ending at position 4
-console.log(arr.slice(-2)); // The last two elements of the array
-console.log(arr.slice(-1));
-console.log(arr.slice(1, -2)); // starts extracting from postion one and stop before the last two
-console.log(arr.slice()); // can be used to create shallow copies too
-console.log([...arr]);
+BONUS: What's the average weight of the heaviest breed that likes to fetch? HINT: Use the "Math.max" method along with the ... operator.
 
-
-// SPLICE Method
-// We can add or remove items from an array but it changes the original array
-
-// console.log(arr.splice(2));
-arr.splice(-1);
-arr.splice(1, 2);
-console.log(arr); // extracted elements are gone. splice deleted the rest elements
-
-// REVERSE
-// It reverses an array
-// Also mutates the arrays too
-arr = ['a', 'b', 'c', 'd', 'e'];
-const arr2 = ['j', 'i', 'h', 'g', 'f']
-console.log(arr2.reverse());
-console.log(arr2);
-
-
-
-
-// CONCAT
-// It combines two arrays
-// It doesn't mutate the original array
-const letters = arr.concat(arr2)
-console.log(letters);
-console.log([...arr, arr2]);
-
-// JOIN
-console.log(letters.join(' - '));
-
-// AT Method
-const arr = [23, 11, 64];
-console.log(arr[0]); // older
-console.log(arr.at(0)); // new
-
-console.log(arr[arr.length - 1]); // getting the last element of an array (before)
-console.log(arr.slice(-1)[0]); // or using slice method
-console.log(arr.at(-1)); // using the at method (newer method)
-
-// AT Method also works on strings
-console.log('Vicky'.at(0)); 
-console.log('Vicky'.at(-1));
-
-
-
-
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
-// for (const movement of movements) {
-for(const [i, movement] of movements.entries()) { // getting the current element using index
-  if (movement > 0) {
-    console.log(`Movement ${i + 1}: You deposited ${movement}`);
-  } else {
-    console.log(`You withdrew ${Math.abs(movement)}`); // Maths.abs takes the absolute value
-  }
-}
-
-// LOOPING OVER ARRAYS USING THE FOREACH METHOD
-// loops over an array and executes the callback function and passes in the current element of the array after each iteration
-movements.forEach(function (movement, i, arr) { // first element has to be the element before the index
-  if (movement > 0) {
-    console.log(`Movement ${i + 1}: You deposited ${movement}`);
-  } else {
-    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(movement)}`); 
-  }
-})
-// 0: function(200)
-// 1: function(450)
-// 2: function(400)
-// etc
-
-// Difference between foreach and forof loop is that
-// You cannot break out of a foreach loop
-// continue and break statements do not work in a for each loop
+TEST DATA:
 */
 
 
+const breeds = [
+  {
+    breed: 'German Shepherd',
+    averageWeight: 32,
+    activities: ['fetch', 'swimming'],
+  },
+  {
+    breed: 'Dalmatian',
+    averageWeight: 24,
+    activities: ['running', 'fetch', 'agility'],
+  },
+  {
+    breed: 'Labrador',
+    averageWeight: 28,
+    activities: ['swimming', 'fetch'],
+  },
+  {
+    breed: 'Beagle',
+    averageWeight: 12,
+    activities: ['digging', 'fetch'],
+  },
+  {
+    breed: 'Husky',
+    averageWeight: 26,
+    activities: ['running', 'agility', 'swimming'],
+  },
+  {
+    breed: 'Bulldog',
+    averageWeight: 36,
+    activities: ['sleeping'],
+  },
+  {
+    breed: 'Poodle',
+    averageWeight: 18,
+    activities: ['agility', 'fetch'],
+  },
+];
 
-// FOREACH WITH MAPS AND SETS
-
-// Map
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
-
-currencies.forEach(function (value, key, map) {
-  console.log(`${key}: ${value}`);
-})
-
-// Set
-const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
-console.log(currenciesUnique);
-
-currenciesUnique.forEach(function (value, _, map) {
-  // console.log(`${key}: ${value}`); // Set doesn't have keys or indexes
-  console.log(`${value}: ${value}`);
-  // When using .forEach() on a Set, the second argument is redundant, and you only need the value.
-})
-
-currenciesUnique.forEach(value => console.log(value));
 
 
 
+const huskyWeight = breeds.find(breed => breed.breed === 'Husky').averageWeight;
+console.log(huskyWeight);
 
+const dogBothActivities = breeds.find((breed) => breed.activities.includes('fetch') && breed.activities.includes('running')).breed;
+console.log(dogBothActivities);
 
+const allActivities = breeds.flatMap(breed => breed.activities)
+console.log(allActivities);
 
+const uniqueActivities = [...new Set(breeds.flatMap(breed => breed.activities))];
 
+console.log(uniqueActivities);
 
+const swimmingAdjacent = [...new Set(breeds.flatMap(breed => {
+  if (breed.activities.includes('swimming')) {
+    return breed.activities.filter(activity => activity !== 'swimming')
+  }
+  return []
+}))];
+console.log(swimmingAdjacent);
 
+console.log(breeds.every(weight => weight.averageWeight > 10));
 
+console.log(breeds.some(act => act.activities.length >= 3));
 
-
-
-
-
+const averageWeight = breeds.filter(breed => {
+  if (breed.activities.includes('fetch')) {
+    return breed.averageWeight
+  }
+  
+}).map(breed => breed.averageWeight);
+const heaviest = Math.max(...averageWeight);
+console.log(heaviest);
