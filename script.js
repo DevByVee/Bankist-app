@@ -672,20 +672,23 @@ const breeds = [
 
 
 
-
+// 1.
 const huskyWeight = breeds.find(breed => breed.breed === 'Husky').averageWeight;
 console.log(huskyWeight);
 
+// 2.
 const dogBothActivities = breeds.find((breed) => breed.activities.includes('fetch') && breed.activities.includes('running')).breed;
 console.log(dogBothActivities);
 
+// 3.
 const allActivities = breeds.flatMap(breed => breed.activities)
 console.log(allActivities);
 
+// 4.
 const uniqueActivities = [...new Set(breeds.flatMap(breed => breed.activities))];
-
 console.log(uniqueActivities);
 
+// 5
 const swimmingAdjacent = [...new Set(breeds.flatMap(breed => {
   if (breed.activities.includes('swimming')) {
     return breed.activities.filter(activity => activity !== 'swimming')
@@ -694,10 +697,13 @@ const swimmingAdjacent = [...new Set(breeds.flatMap(breed => {
 }))];
 console.log(swimmingAdjacent);
 
+// 6.
 console.log(breeds.every(weight => weight.averageWeight > 10));
 
+// 7.
 console.log(breeds.some(act => act.activities.length >= 3));
 
+// 8.
 const averageWeight = breeds.filter(breed => {
   if (breed.activities.includes('fetch')) {
     return breed.averageWeight
