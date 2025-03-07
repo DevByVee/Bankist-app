@@ -613,7 +613,6 @@ console.log(overalBalance);
 
 
 // Coding Challenge #4
-
 /*
 This time, Julia and Kate are studying the activity levels of different dog breeds.
 
@@ -630,8 +629,6 @@ BONUS: What's the average weight of the heaviest breed that likes to fetch? HINT
 
 TEST DATA:
 */
-
-
 const breeds = [
   {
     breed: 'German Shepherd',
