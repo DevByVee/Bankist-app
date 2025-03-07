@@ -10,6 +10,7 @@ const account1 = {
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
+  type: premium,
 };
 
 const account2 = {
@@ -17,6 +18,7 @@ const account2 = {
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
+  type: standard,
 };
 
 const account3 = {
@@ -24,6 +26,7 @@ const account3 = {
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
+  type: premium,
 };
 
 const account4 = {
@@ -31,6 +34,7 @@ const account4 = {
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
+  type: basic,
 };
 
 const accounts = [account1, account2, account3, account4];
@@ -61,11 +65,12 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
 
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
 
-  movements.forEach(function (mov, i) {
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -202,7 +207,12 @@ btnClose.addEventListener('click', function (e) {
   inputCloseUsername.value = inputClosePin.value = '';
 });
 
-
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
+})
 
 
 
@@ -323,7 +333,7 @@ movements.forEach(function (movement, i, arr) { // first element has to be the e
 // Difference between foreach and forof loop is that
 // You cannot break out of a foreach loop
 // continue and break statements do not work in a for each loop
-*/
+
 
 
 
@@ -628,7 +638,7 @@ YOUR TASKS:
 BONUS: What's the average weight of the heaviest breed that likes to fetch? HINT: Use the "Math.max" method along with the ... operator.
 
 TEST DATA:
-*/
+
 const breeds = [
   {
     breed: 'German Shepherd',
@@ -709,3 +719,54 @@ const averageWeight = breeds.filter(breed => {
 }).map(breed => breed.averageWeight);
 const heaviest = Math.max(...averageWeight);
 console.log(heaviest);
+*/
+
+
+// Sorting An Array
+// Sort mutates an array
+
+// Strings
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort());
+console.log(owners);
+
+// Numbers
+console.log(movements);
+
+// if return < 0 then A comes first
+// return > 0 then B comes first
+
+// Ascending
+// movements.sort((a, b) => {
+//   if (a > b) return 1;
+//   if (b > a) return -1;
+// });
+
+movements.sort((a, b) => a - b);
+console.log(movements);
+
+// Descending
+// movements.sort((a, b) => {
+//   if (a > b) return -1;
+//   if (b > a) return 1;
+// });
+movements.sort((a, b) => a - b);
+console.log(movements);
+
+// Array Grouping
+// Group Values in an array based on a certain condition
+console.log(movements);
+const groupedMovements = Object.groupBy(movements, (movement) => movement > 0 ? 'deposits' : 'withdrawals');
+console.log(groupedMovements);
+const groupedByActivity = Object.groupBy(accounts, (account) => {
+  const movementCount = account.movements.length
+  if (movementCount >= 8) return 'Very active';
+  if (movementCount >= 4) return 'Active';
+  if (movementCount >= 1) return 'Moderate';
+  return 'Not active';
+});
+console.log(groupedByActivity);
+
+// const groupedAccounts = Object.groupBy(accounts, account => account.type);
+const groupedAccounts = Object.groupBy(accounts, ({type}) => type);
+console.log(groupedAccounts);
