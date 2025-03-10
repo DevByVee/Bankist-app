@@ -789,4 +789,36 @@ console.log(x);
 arr.fill(23, 2, 6) // fill from index 2 to 6 with 23
 
 // Array.from Method
-const arr2 = Array.from({length: 7}, () => 1);
+const arr2 = Array.from({ length: 7 }, () => 1);
+console.log(arr2);
+
+const arr3 = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(arr3);
+
+const randomDice = Array.from({ length: 5 }, () => Math.floor(Math.random() * 6) + 1);
+
+
+
+labelBalance.addEventListener('click', function () { 
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => el.textContent.replace('💲', '')
+  );
+  console.log(movementsUI);
+
+  // OR
+  // const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+
+});
+
+// Non-Destructive Alternatives: toReversed, toSorted, toSpliced, with
+// They don't mutate the underlying arrays
+
+console.log(movements);
+const reversedMov = movements.toReversed();
+console.log(reversedMov);
+
+// with
+// movements[1] = 2000;
+const newMovements = movements.with(1, 2000); // first is the index
+console.log(movements);
