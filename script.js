@@ -719,7 +719,6 @@ const averageWeight = breeds.filter(breed => {
 }).map(breed => breed.averageWeight);
 const heaviest = Math.max(...averageWeight);
 console.log(heaviest);
-*/
 
 
 // Sorting An Array
@@ -770,3 +769,24 @@ console.log(groupedByActivity);
 // const groupedAccounts = Object.groupBy(accounts, account => account.type);
 const groupedAccounts = Object.groupBy(accounts, ({type}) => type);
 console.log(groupedAccounts);
+*/
+
+// More ways of creating and filling arrays
+const arr = [1, 2, 3, 4, 5];
+console.log(new Array(1, 2, 3, 4, 5));
+
+const x = new Array(7);
+console.log(x);
+// console.log(x.map(() => 5));
+
+// Fill method
+// Fill mutates the underlying method
+
+x.fill(1);
+x.fill(1, 3); // specify where it should start filling up from
+console.log(x);
+
+arr.fill(23, 2, 6) // fill from index 2 to 6 with 23
+
+// Array.from Method
+const arr2 = Array.from({length: 7}, () => 1);
