@@ -769,7 +769,7 @@ console.log(groupedByActivity);
 // const groupedAccounts = Object.groupBy(accounts, account => account.type);
 const groupedAccounts = Object.groupBy(accounts, ({type}) => type);
 console.log(groupedAccounts);
-*/
+
 
 // More ways of creating and filling arrays
 const arr = [1, 2, 3, 4, 5];
@@ -822,3 +822,18 @@ console.log(reversedMov);
 // movements[1] = 2000;
 const newMovements = movements.with(1, 2000); // first is the index
 console.log(movements);
+*/
+
+// Array Method Practice
+// 1.
+const bankDepositSum = accounts.flatMap(acc => acc.movements)
+ .filter(mov => mov > 0)
+ .reduce((sum, cur) => sum + cur, 0);
+console.log(bankDepositSum);
+
+// 2.
+// const numDeposits1000 = accounts.flatMap(acc => acc.movements).filter(mov => mov >= 1000).length
+
+const numDeposits1000 = accounts.flatMap(acc => acc.movements).reduce((acc, cur) => (cur >= 1000 ? acc + 1 : acc), 0);
+
+console.log(numDeposits1000);
