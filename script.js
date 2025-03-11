@@ -10,7 +10,7 @@ const account1 = {
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
-  type: premium,
+  type: 'premium',
 };
 
 const account2 = {
@@ -18,7 +18,7 @@ const account2 = {
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
-  type: standard,
+  type: 'standard',
 };
 
 const account3 = {
@@ -26,7 +26,7 @@ const account3 = {
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
-  type: premium,
+  type: 'premium',
 };
 
 const account4 = {
@@ -34,7 +34,7 @@ const account4 = {
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
-  type: basic,
+  type: 'basic',
 };
 
 const accounts = [account1, account2, account3, account4];
@@ -902,6 +902,8 @@ HINT 1: Use many different tools to solve these challenges, you can use the summ
 HINT 2: Being within a range 10% above and below the recommended portion means: current > (recommended * 0.90) && current < (recommended * 1.10). Basically, the current portion should be between 90% and 110% of the recommended portion.
 
 TEST DATA:
+GOOD LUCK 😀
+*/
 const dogs = [
   { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
   { weight: 8, curFood: 200, owners: ['Matilda'] },
@@ -910,5 +912,61 @@ const dogs = [
   { weight: 32, curFood: 340, owners: ['Michael'] },
 ];
 
-GOOD LUCK 😀
-*/
+// 1.
+dogs.forEach(dog => {
+  dog.recommendedFood = Math.floor(Math.pow(dog.weight, 0.75) * 28) ;
+});
+console.log(dogs);
+
+// 2.
+const sarahDog = dogs.find(dog => dog.owners.includes('Sarah'));
+console.log(`${sarahDog.curFood > sarahDog.recommendedFood ? 'too much' : 'too little'}`);
+
+// 3.
+const ownersTooMuch = dogs.filter(dog => dog.curFood > dog.recommendedFood).flatMap(dog => dog.owners);
+console.log(ownersTooMuch);
+const ownersTooLittle = dogs
+  .filter(dog => dog.curFood < dog.recommendedFood)
+  .flatMap(dog => dog.owners);
+console.log(ownersTooLittle);
+
+// 4.
+console.log(`${ownersTooLittle.join(' and ')}'s dogs eat too little and ${ownersTooMuch.join(' and ')}'s dogs eat too much`);
+
+// 5.
+console.log(dogs.some(dog => dog.curFood === dog.recommendedFood)); 
+
+// 6.
+console.log(
+  dogs.every(
+    dog =>
+      dog.curFood > dog.recommendedFood * 0.9 &&
+      dog.curFood < dog.recommendedFood * 1.1
+  )
+);
+
+// 7.
+const dogsOkay = dogs.filter(
+  dog =>
+    dog.curFood > dog.recommendedFood * 0.9 &&
+    dog.curFood < dog.recommendedFood * 1.1
+);
+console.log(dogsOkay);
+
+// 8.
+const groupByFood = Object.groupBy(dogs, (dog) => {
+  if (dog.curFood > dog.recommendedFood) return 'too-little';
+  else if (dog.curFood < dog.recommendedFood) return 'too-much';
+  return 'Exact'
+});
+console.log(groupByFood);
+
+// 9.
+const groupByOwners = Object.groupBy(dogs, (dog) => {
+  return dog.owners.length;
+});
+console.log(groupByOwners);
+
+// 10.
+const arr = dogs.toSorted((cur, rec) => cur.recommendedFood - rec.recommendedFood)
+console.log(arr);
