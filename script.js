@@ -163,8 +163,6 @@ const startLogOutTimer = function () {
 
 // EVENT HANDLERs
 let currentAccount;
-
-// GLOBAL TIMER VARIABLE
 let timer;
 
 // LOGIN
