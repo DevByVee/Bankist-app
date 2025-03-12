@@ -19,15 +19,17 @@ body {
   font-family: "Poppins", sans-serif;
   color: #444;
   background-color: #f3f3f3;
-  height: 100vh;
-  padding: 2rem;
+  min-height: 100vh;
+  padding: 2rem 1rem;
 }
 
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
+  padding: 0 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .welcome {
@@ -41,17 +43,18 @@ nav {
 
 .login {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .login__input {
   border: none;
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 1rem;
   font-size: 1.6rem;
   font-family: inherit;
   text-align: center;
   width: 12rem;
   border-radius: 10rem;
-  margin-right: 1rem;
   color: inherit;
   border: 1px solid #fff;
   transition: all 0.3s;
@@ -89,27 +92,25 @@ nav {
   max-width: 100rem;
   margin: 4rem auto;
   display: grid;
-  grid-template-columns: 4fr 3fr;
-  grid-template-rows: auto repeat(3, 15rem) auto;
+  grid-template-columns: 1fr;
   gap: 2rem;
 
   /* NOTE This creates the fade in/out anumation */
-  opacity: 0;
-  transition: all 1s ;
+  /* opacity: 0; */
+  transition: all 1s;
 }
 
 .balance {
-  grid-column: 1 / span 2;
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 2rem;
 }
 
 .balance__label {
   font-size: 2.2rem;
   font-weight: 500;
-  margin-bottom: -0.2rem;
 }
 
 .balance__date {
@@ -118,23 +119,25 @@ nav {
 }
 
 .balance__value {
-  font-size: 4.5rem;
+  font-size: 4rem;
   font-weight: 400;
 }
 
 /* MOVEMENTS */
 .movements {
-  grid-row: 2 / span 3;
   background-color: #fff;
   border-radius: 1rem;
-  overflow: scroll;
+  overflow-y: auto;
+  max-height: 50rem;
 }
 
 .movements__row {
-  padding: 2.25rem 4rem;
+  padding: 2rem;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #eee;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .movements__type {
@@ -144,7 +147,6 @@ nav {
   color: #fff;
   padding: 0.1rem 1rem;
   border-radius: 10rem;
-  margin-right: 2rem;
 }
 
 .movements__date {
@@ -169,9 +171,10 @@ nav {
 
 /* SUMMARY */
 .summary {
-  grid-row: 5 / 6;
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
+  gap: 1rem;
   padding: 0 0.3rem;
   margin-top: 1rem;
 }
@@ -180,12 +183,11 @@ nav {
   font-size: 1.2rem;
   font-weight: 500;
   text-transform: uppercase;
-  margin-right: 0.8rem;
 }
 
 .summary__value {
   font-size: 2.2rem;
-  margin-right: 2.5rem;
+  margin-right: 1.5rem;
 }
 
 .summary__value--in,
@@ -209,8 +211,9 @@ nav {
 /* OPERATIONS */
 .operation {
   border-radius: 1rem;
-  padding: 3rem 4rem;
+  padding: 2rem;
   color: #333;
+  margin-bottom: 2rem;
 }
 
 .operation--transfer {
@@ -234,17 +237,17 @@ h2 {
 
 .form {
   display: grid;
-  grid-template-columns: 2.5fr 2.5fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 0.4rem 1rem;
+  grid-template-columns: 1fr;
+  gap: 1rem;
 }
 
-/* Exceptions for interst */
+/* Exceptions for interest */
 .form.form--loan {
-  grid-template-columns: 2.5fr 1fr 2.5fr;
+  grid-template-columns: 1fr;
 }
+
 .form__label--loan {
-  grid-row: 2;
+  grid-row: auto;
 }
 /* End exceptions */
 
@@ -278,6 +281,7 @@ h2 {
   background-color: #fff;
   cursor: pointer;
   transition: all 0.3s;
+  padding: 0.5rem;
 }
 
 .form__btn:focus {
@@ -288,10 +292,107 @@ h2 {
 .logout-timer {
   padding: 0 0.3rem;
   margin-top: 1.9rem;
-  text-align: right;
+  text-align: center;
   font-size: 1.25rem;
 }
 
 .timer {
   font-weight: 600;
+}
+
+/* Media Queries for Responsive Design */
+
+/* Tablet and larger screens */
+@media (min-width: 768px) {
+  body {
+    padding: 2rem;
+  }
+  
+  nav {
+    padding: 0 2rem;
+    flex-wrap: nowrap;
+  }
+  
+  .login {
+    flex-wrap: nowrap;
+  }
+  
+  .login__input {
+    margin-right: 1rem;
+    padding: 0.5rem 2rem;
+  }
+  
+  .app {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto;
+  }
+  
+  .balance {
+    grid-column: 1 / span 2;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  
+  .movements {
+    grid-row: 2 / span 3;
+    grid-column: 1;
+  }
+  
+  .operation {
+    grid-column: 2;
+  }
+  
+  .operation--transfer {
+    grid-row: 2;
+  }
+  
+  .operation--loan {
+    grid-row: 3;
+  }
+  
+  .operation--close {
+    grid-row: 4;
+  }
+  
+  .summary {
+    grid-row: 5;
+    grid-column: 1 / span 2;
+    flex-wrap: nowrap;
+  }
+  
+  .form {
+    grid-template-columns: 2.5fr 2.5fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 0.4rem 1rem;
+  }
+  
+  /* Restore exceptions for interest */
+  .form.form--loan {
+    grid-template-columns: 2.5fr 1fr 2.5fr;
+  }
+  
+  .form__label--loan {
+    grid-row: 2;
+  }
+  
+  .logout-timer {
+    text-align: right;
+  }
+  
+  .movements__row {
+    padding: 2.25rem 4rem;
+    flex-wrap: nowrap;
+  }
+  
+  .movements__type {
+    margin-right: 2rem;
+  }
+}
+
+/* Larger desktop screens */
+@media (min-width: 1200px) {
+  .app {
+    grid-template-columns: 4fr 3fr;
+  }
 }
