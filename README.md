@@ -113,3 +113,8 @@ Bankist is built with vanilla JavaScript and leverages modern ES6+ features:
 - Budget planning tools
 - Mobile applications
 - Data visualizations with charts
+
+## Author
+- LinkedIn - [victoria-orisanmi](https://www.linkedin.com/in/victoria-orisanmi/)
+- Frontend Mentor - [@DevByVee](https://www.frontendmentor.io/profile/DevByVee)
+- Twitter - [@OlukeyeVictoria](https://x.com/OlukeyeVictoria)
