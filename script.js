@@ -132,7 +132,34 @@ const updateUI = function (acc) {
 
   // Display summary
   calcDisplaySummary(acc);
-}
+};
+
+// LOGOUT TIMER FUNCTION
+const startLogOutTimer = function () {
+  let time = 300; // 5 minutes in seconds
+
+  const tick = function () {
+    const min = String(Math.floor(time / 60)).padStart(2, '0');
+    const sec = String(time % 60).padStart(2, '0');
+
+    labelTimer.textContent = `${min}:${sec}`;
+
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+    }
+
+    time--;
+  };
+
+  // Start the countdown immediately
+  tick();
+  const timer = setInterval(tick, 1000);
+
+  return timer;
+};
+
 
 // EVENT HANDLERs
 let currentAccount;
@@ -223,31 +250,6 @@ btnClose.addEventListener('click', function (e) {
   clearInterval(timer);
 });
 
-// LOGOUT TIMER FUNCTION
-const startLogOutTimer = function () {
-  let time = 300; // 5 minutes in seconds
-
-  const tick = function () {
-    const min = String(Math.floor(time / 60)).padStart(2, '0');
-    const sec = String(time % 60).padStart(2, '0');
-
-    labelTimer.textContent = `${min}:${sec}`;
-
-    if (time === 0) {
-      clearInterval(timer);
-      labelWelcome.textContent = 'Log in to get started';
-      containerApp.style.opacity = 0;
-    }
-
-    time--;
-  };
-
-  // Start the countdown immediately
-  tick();
-  const timer = setInterval(tick, 1000);
-
-  return timer;
-};
 
 // SORT
 let sorted = false;
